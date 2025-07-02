@@ -19,16 +19,48 @@ int openbuffer(int argc, char* fname){
     int pc = 0;
 
     fread(buffer, fsize, 1, f);
+    // for (int i = 0; i < fsize; i++) {
+    //     printf("%02x\n", buffer[i]);
+    // }
 
-    while(pc < fsize){
-        
+    while(pc <fsize){
+        pc += disassemble(buffer, pc);
+
     }
+
+    // disassemble(buffer, 0);
+
+    // free((void *)buffer);
+
     return 0;
 
 }
 
-void disassemble(unsigned char* buffer, int pc){
+int disassemble(unsigned char* buffer, int pc){
+    // printf("%c\n", buffer[pc]);
 
-    return;
+    unsigned char hx = buffer[pc];
+
+    int opbytes = 1;
+
+    switch(hx){
+        case 0x00: printf("NOP\n"); break;
+        case 0x01: printf("LXI B,D16\n"); opbytes = 3; break;
+        case 0x02: printf("STAX B\n"); break;
+        case 0x03: printf("INX B\n"); break;
+        case 0x04: printf("INR B\n"); break;
+        case 0x05: printf("DCR B\n"); break;
+        case 0x06: printf("MVI B, D8\n"); opbytes = 2; break;
+        case 0x07: printf("RLC\n"); break;
+        case 0x09: printf("DAD B\n"); break;
+        case 0x0a: printf("LDAX B\n"); break;
+        case 0x0b: printf("DCX B\n"); break;
+        case 0x0c: printf("INR C\n"); break;
+        case 0x0d: printf("DCR C\n"); break;
+        case 0x0e: printf("MVI C, D8\n"); opbytes = 2; break;
+        case 0x0f: printf("RRC\n"); break;
+        default: printf("Invalid\n"); break;
+    }
+    return opbytes;
 }
 

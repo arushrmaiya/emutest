@@ -4,6 +4,6 @@
 
 int openbuffer(int argc, char* fname);
 
-void disassemble(unsigned char* codebuffer, int pc);
+int disassemble(unsigned char* codebuffer, int pc);
 
 #endif
