@@ -59,6 +59,39 @@ int disassemble(unsigned char* buffer, int pc){
         case 0x0d: printf("DCR C\n"); break;
         case 0x0e: printf("MVI C, D8\n"); opbytes = 2; break;
         case 0x0f: printf("RRC\n"); break;
+
+        case 0x11: printf("LXI D, D16\n"); opbytes = 3; break;
+        case 0x12: printf("STAX D\n"); break;
+        case 0x13: printf("INX D\n"); break;
+        case 0x14: printf("INR D\n"); break;
+        case 0x15: printf("DCR D\n"); break;
+        case 0x16: printf("MVI D, D8 n"); opbytes = 2; break;
+        case 0x17: printf("RAL \n"); break;
+        case 0x19: printf("DAD D\n"); break;
+        case 0x1a: printf("LDAX D\n"); break;
+        case 0x1b: printf("DCX D\n"); break;
+        case 0x1c: printf("INR E\n"); break;
+        case 0x1d: printf("DCR E\n"); break;
+        case 0x1e: printf("MVI E, D8\n"); opbytes = 2; break;
+        case 0x1f: printf("RAR\n"); break;
+
+        case 0x21: printf("LXI H, D16\n"); opbytes = 3; break;
+        case 0x22: printf("SHLD adr\n"); opbytes = 3; break;
+        case 0x23: printf("INX H\n"); break;
+        case 0x24: printf("INR H\n"); break;
+        case 0x25: printf("DCR H\n"); break;
+        case 0x26: printf("MVI H, D8\n"); opbytes = 2; break;
+        case 0x27: printf("DAA\n"); break;
+        case 0x29: printf("DAD H\n"); break;
+        case 0x2a: printf("LHLD adr\n"); opbytes = 3; break;
+        case 0x2b: printf("DCX H\n"); break;
+        case 0x2c: printf("INR L\n"); break;
+        case 0x2d: printf("DCR L\n"); break;
+        case 0x2e: printf("MVI L, D8\n"); opbytes = 2; break;
+        case 0x2f: printf("CMA\n"); break;
+
+        
+
         default: printf("Invalid\n"); break;
     }
     return opbytes;
