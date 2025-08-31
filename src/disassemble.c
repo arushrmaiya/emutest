@@ -19,9 +19,6 @@ int openbuffer(int argc, char* fname){
     int pc = 0;
 
     fread(buffer, fsize, 1, f);
-    // for (int i = 0; i < fsize; i++) {
-    //     printf("%02x\n", buffer[i]);
-    // }
 
     while(pc <fsize){
         pc += disassemble(buffer, pc);
@@ -90,7 +87,20 @@ int disassemble(unsigned char* buffer, int pc){
         case 0x2e: printf("MVI L, D8\n"); opbytes = 2; break;
         case 0x2f: printf("CMA\n"); break;
 
-        
+        case 0x31: printf("LXI SP, D16\n"); opbytes = 3; break;
+        case 0x32: printf("STA adr\n"); opbytes = 3; break;
+        case 0x33: printf("INX SP\n"); break;
+        case 0x34: printf("INR M\n"); break;
+        case 0x35: printf("DCR M\n"); break;
+        case 0x36: printf("MVI M, D8\n"); opbytes = 2; break;
+        case 0x37: printf("STC\n"); break;
+        case 0x39: printf("DAD SP\n"); break;
+        case 0x3a: printf("LDA adr\n"); opbytes = 3; break;
+        case 0x3b: printf("DCX SP\n"); break;
+        case 0x3c: printf("INR A\n"); break;
+        case 0x3d: printf("DCR A\n"); break;
+        case 0x3e: printf("MVI A, D8\n"); opbytes = 2; break;
+        case 0x3f: printf("CMC\n"); break;
 
         default: printf("Invalid\n"); break;
     }
