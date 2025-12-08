@@ -42,64 +42,64 @@ int disassemble(unsigned char* buffer, int pc){
 
     switch(hx){
         case 0x00: printf("NOP\n"); break;
-        case 0x01: printf("LXI B,D16\n"); opbytes = 3; break;
+        case 0x01: printf("LXI B,d16\n"); opbytes = 3; break;
         case 0x02: printf("STAX B\n"); break;
         case 0x03: printf("INX B\n"); break;
         case 0x04: printf("INR B\n"); break;
         case 0x05: printf("DCR B\n"); break;
-        case 0x06: printf("MVI B, D8\n"); opbytes = 2; break;
+        case 0x06: printf("MVI B, d8\n"); opbytes = 2; break;
         case 0x07: printf("RLC\n"); break;
         case 0x09: printf("DAD B\n"); break;
         case 0x0a: printf("LDAX B\n"); break;
         case 0x0b: printf("DCX B\n"); break;
         case 0x0c: printf("INR C\n"); break;
         case 0x0d: printf("DCR C\n"); break;
-        case 0x0e: printf("MVI C, D8\n"); opbytes = 2; break;
+        case 0x0e: printf("MVI C, d8\n"); opbytes = 2; break;
         case 0x0f: printf("RRC\n"); break;
 
-        case 0x11: printf("LXI D, D16\n"); opbytes = 3; break;
+        case 0x11: printf("LXI D, d16\n"); opbytes = 3; break;
         case 0x12: printf("STAX D\n"); break;
         case 0x13: printf("INX D\n"); break;
         case 0x14: printf("INR D\n"); break;
         case 0x15: printf("DCR D\n"); break;
-        case 0x16: printf("MVI D, D8 n"); opbytes = 2; break;
+        case 0x16: printf("MVI D, d8 n"); opbytes = 2; break;
         case 0x17: printf("RAL \n"); break;
         case 0x19: printf("DAD D\n"); break;
         case 0x1a: printf("LDAX D\n"); break;
         case 0x1b: printf("DCX D\n"); break;
         case 0x1c: printf("INR E\n"); break;
         case 0x1d: printf("DCR E\n"); break;
-        case 0x1e: printf("MVI E, D8\n"); opbytes = 2; break;
+        case 0x1e: printf("MVI E, d8\n"); opbytes = 2; break;
         case 0x1f: printf("RAR\n"); break;
 
-        case 0x21: printf("LXI H, D16\n"); opbytes = 3; break;
+        case 0x21: printf("LXI H, d16\n"); opbytes = 3; break;
         case 0x22: printf("SHLD adr\n"); opbytes = 3; break;
         case 0x23: printf("INX H\n"); break;
         case 0x24: printf("INR H\n"); break;
         case 0x25: printf("DCR H\n"); break;
-        case 0x26: printf("MVI H, D8\n"); opbytes = 2; break;
+        case 0x26: printf("MVI H, d8\n"); opbytes = 2; break;
         case 0x27: printf("DAA\n"); break;
         case 0x29: printf("DAD H\n"); break;
         case 0x2a: printf("LHLD adr\n"); opbytes = 3; break;
         case 0x2b: printf("DCX H\n"); break;
         case 0x2c: printf("INR L\n"); break;
         case 0x2d: printf("DCR L\n"); break;
-        case 0x2e: printf("MVI L, D8\n"); opbytes = 2; break;
+        case 0x2e: printf("MVI L, d8\n"); opbytes = 2; break;
         case 0x2f: printf("CMA\n"); break;
 
-        case 0x31: printf("LXI SP, D16\n"); opbytes = 3; break;
+        case 0x31: printf("LXI SP, d16\n"); opbytes = 3; break;
         case 0x32: printf("STA adr\n"); opbytes = 3; break;
         case 0x33: printf("INX SP\n"); break;
         case 0x34: printf("INR M\n"); break;
         case 0x35: printf("DCR M\n"); break;
-        case 0x36: printf("MVI M, D8\n"); opbytes = 2; break;
+        case 0x36: printf("MVI M, d8\n"); opbytes = 2; break;
         case 0x37: printf("STC\n"); break;
         case 0x39: printf("DAD SP\n"); break;
         case 0x3a: printf("LDA adr\n"); opbytes = 3; break;
         case 0x3b: printf("DCX SP\n"); break;
         case 0x3c: printf("INR A\n"); break;
         case 0x3d: printf("DCR A\n"); break;
-        case 0x3e: printf("MVI A, D8\n"); opbytes = 2; break;
+        case 0x3e: printf("MVI A, d8\n"); opbytes = 2; break;
         case 0x3f: printf("CMC\n"); break;
 
         case 0x40: printf("MOV B, B\n"); break;
@@ -244,17 +244,17 @@ int disassemble(unsigned char* buffer, int pc){
         case 0xc3: printf("JMP adr\n"); opbytes = 3; break;
         case 0xc4: printf("CNZ adr\n"); opbytes = 3; break;
         case 0xc5: printf("PUSH B\n"); break;
-        case 0xc6: printf("ADI D8\n"); opbytes = 2; break;
+        case 0xc6: printf("ADI d8\n"); opbytes = 2; break;
         case 0xc7: printf("RST 0\n"); break;
         case 0xc8: printf("RZ\n"); break;
         case 0xc9: printf("RET\n"); break;
         case 0xca: printf("JZ adr\n"); opbytes = 3; break;
         case 0xcc: printf("CZ adr\n"); opbytes = 3; break;
         case 0xcd: printf("CALL adr\n"); opbytes = 3; break;
-        case 0xce: printf("ACI D8\n"); opbytes = 2; break;
+        case 0xce: printf("ACI d8\n"); opbytes = 2; break;
         case 0xcf: printf("RST 1\n"); break;
 
-        
+
 
 
         default: printf("Invalid\n"); break;
