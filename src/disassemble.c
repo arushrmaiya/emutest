@@ -38,9 +38,13 @@ int disassemble(unsigned char* buffer, int pc){
 
     unsigned char hx = buffer[pc];
 
+    unsigned char *code = buffer + pc;
+
+
     int opbytes = 1;
 
-    switch(hx){
+    //Note 1: d16, adr = {code[2], code[1]} 
+    switch(*code){
         case 0x00: printf("NOP\n"); break;
         case 0x01: printf("LXI B,d16\n"); opbytes = 3; break;
         case 0x02: printf("STAX B\n"); break;
@@ -254,8 +258,20 @@ int disassemble(unsigned char* buffer, int pc){
         case 0xce: printf("ACI d8\n"); opbytes = 2; break;
         case 0xcf: printf("RST 1\n"); break;
 
-
-
+        case 0xd0: printf("RNC\n"); break;
+        case 0xd1: printf("POP D\n"); break;
+        case 0xd2: printf("JNC adr\n"); opbytes = 3; break;
+        case 0xd3: printf("OUT d8\n"); opbytes = 2; break;
+        case 0xd4: printf("CNC adr\n"); opbytes = 3; break;
+        case 0xd5: printf("PUSH D\n"); break;
+        case 0xd6: printf("SUI d8 \n"); opbytes = 2; break;
+        case 0xd7: printf("RST 2\n"); break;
+        case 0xd8: printf("RC\n"); break;
+        case 0xda: printf("JC adr\n"); opbytes = 3; break;
+        case 0xdb: printf("IN d8\n"); opbytes = 2; break;
+        case 0xdc: printf("CC adr\n"); break;
+        case 0xde: printf("SBI d8\n"); opbytes = 2; break;
+        case 0xdf: printf("RST 3\n"); break;
 
         default: printf("Invalid\n"); break;
     }
