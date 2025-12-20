@@ -4,7 +4,7 @@
 
 
 int main(){
-    char filename[] = "invaders/invaders.h";
-    int i = openbuffer(10, "invaders/invaders.h");
+    char filename[] = "invaders/invaders";
+    int i = openbuffer(10, filename);
     return 0;
 }
