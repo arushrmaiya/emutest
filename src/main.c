@@ -5,6 +5,6 @@
 
 int main(){
     char filename[] = "invaders/invaders";
-    int i = openbuffer(10, filename);
+    int i = openbuffer(0, filename);
     return 0;
 }
