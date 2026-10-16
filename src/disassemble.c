@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "disassemble.h"
 
-struct State8080_t state;
 
 
 int openbuffer(int argc, char* fname){
@@ -21,16 +20,19 @@ int openbuffer(int argc, char* fname){
     
     int pc = 0;
 
+    State8080_t curr_state;
+
+    curr_state.pc = 0;
+
 
     fread(buffer, fsize, 1, f);
 
     printf("FSIZE: %4x\n", fsize);
 
-    while(pc <fsize){
+    while(curr_state.pc <fsize){
 
-        printf("%4x ", pc);
-        pc += disassemble(buffer, pc);
-
+        printf("%4x ", curr_state.pc);
+        curr_state.pc += disassemble(buffer, curr_state.pc, &curr_state);
     }
 
     // disassemble(buffer, 0);
@@ -46,7 +48,7 @@ void invalInst(struct State8080_t * state){
     exit(1);
 }
 
-int disassemble(unsigned char* buffer, int pc){
+int disassemble(unsigned char* buffer, int pc, State8080_t * curr_state){
     // printf("%c\n", buffer[pc]);
 
     unsigned char hx = buffer[pc];
@@ -403,9 +405,24 @@ int emulate(struct State8080_t* state){
             state->cc.s = ((result & 0x80) != 0);
             /*TODO: Implement Parity*/
             break;}
-        case 0x0d: printf("DCR C\n"); break;
-        case 0x0e: printf("MVI C, #%02x\n", code[1]); /*opbytes = 2*/; break;
-        case 0x0f: printf("RRC\n"); break;
+        case 0x0d: {
+            printf("DCR C\n"); 
+            uint16_t result = (uint16_t)state->regfile.c - 1;
+            state->regfile.c = result & 0xff; 
+            state->cc.z = ((result & 0xff) == 0);
+            state->cc.s = ((result & 0x80) != 0);
+            break;}
+        case 0x0e: {
+            printf("MVI C, #%02x\n", code[1]); 
+            state->regfile.b = code[1];
+            state->pc+=1;
+            break;}
+        case 0x0f: {
+            printf("RRC\n");
+            uint8_t bit = (state->regfile.a) & 0x01;
+            state->regfile.a = (state->regfile.a >> 1) & 0x7f + (uint16_t)(bit<<7);
+            state->cc.cy = bit;
+            break;}
 
         case 0x11: printf("LXI D, #%02x%02x\n", code[2], code[1]); /*opbytes = 3*/; break;
         case 0x12: printf("STAX D\n"); break;
