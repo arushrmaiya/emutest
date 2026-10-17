@@ -20,24 +20,22 @@ int openbuffer(int argc, char* fname){
     
     int pc = 0;
 
-    State8080_t curr_state;
-
-    curr_state.pc = 0;
+    State8080_t* curr_state = (State8080_t *)calloc(1, sizeof(State8080_t));
 
 
     fread(buffer, fsize, 1, f);
 
     printf("FSIZE: %4x\n", fsize);
 
-    while(curr_state.pc <fsize){
+    while(curr_state->pc <fsize){
 
-        printf("%4x ", curr_state.pc);
-        curr_state.pc += disassemble(buffer, curr_state.pc, &curr_state);
+        printf("%4x ", curr_state->pc);
+        curr_state->pc += disassemble(buffer, curr_state->pc, curr_state);
     }
 
-    // disassemble(buffer, 0);
 
     free((void *)buffer);
+    free((void *)curr_state);
 
     return 0;
 
@@ -327,6 +325,7 @@ int disassemble(unsigned char* buffer, int pc, State8080_t * curr_state){
 
 int emulate(struct State8080_t* state){
     uint8_t *code = state->memory + state->pc;
+    int opbytes = 1;
 
     switch(*code){
         case 0x00: break;
@@ -334,7 +333,7 @@ int emulate(struct State8080_t* state){
             printf("LXI B,#%02x%02x\n", code[2], code[1]);
             state->regfile.b = code[2];
             state->regfile.c = code[1];
-            state->pc += 2;
+            opbytes = 3;
             break;
         }
         case 0x02: {
@@ -368,7 +367,7 @@ int emulate(struct State8080_t* state){
         case 0x06: {
             printf("MVI B, #%02x\n", code[1]);
             state->regfile.b = code[1];
-            state->pc+=1;
+            opbytes = 2;
             break;}
         case 0x07: {
             printf("RLC\n");
@@ -415,7 +414,7 @@ int emulate(struct State8080_t* state){
         case 0x0e: {
             printf("MVI C, #%02x\n", code[1]); 
             state->regfile.b = code[1];
-            state->pc+=1;
+            opbytes = 2;
             break;}
         case 0x0f: {
             printf("RRC\n");
@@ -424,7 +423,12 @@ int emulate(struct State8080_t* state){
             state->cc.cy = bit;
             break;}
 
-        case 0x11: printf("LXI D, #%02x%02x\n", code[2], code[1]); /*opbytes = 3*/; break;
+        case 0x11: {
+            printf("LXI D, #%02x%02x\n", code[2], code[1]);
+            state->regfile.d = code[2];
+            state->regfile.e = code[1];
+            opbytes = 3; 
+            break;}
         case 0x12: printf("STAX D\n"); break;
         case 0x13: printf("INX D\n"); break;
         case 0x14: printf("INR D\n"); break;
@@ -670,8 +674,7 @@ int emulate(struct State8080_t* state){
  
         default: printf("Invalid\n"); break;
     }
-    // return opbytes;
-    state->pc +=1;
+    state->pc += opbytes;
     return 0;
 }
 
